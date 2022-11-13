@@ -17,5 +17,4 @@ public class Main implements Submission, Assignment1 {
 		
 		return dfsm.compute(input);
 	}
-
 }

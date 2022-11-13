@@ -427,22 +427,21 @@ and all the non accepting states in the second. */
 	 * @return a boolean that indicates if the input is a member of this machine's language or not
 	 */
 	public boolean compute(String input) {
-		State state;
-		State s;
-		Transition transition;
-		
-		Iterator<State> p = this.states.iterator();
-		Iterator<Transition> t = this.transitions.transitions().iterator();
-		
-		while (p.hasNext()) {
-			state = p.next();
+		// input validation
+		for(char tav : input.toCharArray()) {
+			if(!this.alphabet.contains(tav))
+				return false;
 		}
 		
-		while (t.hasNext()) {
-			transition = t.next();
-			 s = transition.toState();
-			 transition = null;
-		}
+		State statePointer = this.initialState; // set state position from initial state props
+		
+		// run over all chars from input string
+		for(char tav : input.toCharArray())
+			statePointer = this.transitions.applyTo(statePointer, tav); // search for the correct archer 
+		
+		// check if the machine accept the last state position
+		if(this.acceptingStates.contains(statePointer))
+			return true;
 	
 		return false;
 	}
